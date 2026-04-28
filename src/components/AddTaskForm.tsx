@@ -17,7 +17,6 @@ export const AddTaskForm = ({ onSubmit }: AddTaskFormProps) => {
         placeholder="Add new todo task"
         onChange={(e) => setNewTask(e.target.value)}
         value={newTask || ""}
-        autoFocus
       />
       <button type="submit">+</button>
     </form>
