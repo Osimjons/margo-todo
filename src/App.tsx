@@ -1,55 +1,24 @@
-import { useState, type SubmitEvent } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import "./App.css";
 import { AddTaskForm } from "./components/AddTaskForm";
 import { ControlTaskActions } from "./components/ControlTaskActions";
 import { EmptyTaskList } from "./components/EmptyTaskList";
-
-export interface ITodo {
-  description: string;
-  completed: boolean;
-  id: number;
-  createdAt: Date;
-  edited: Date | null;
-}
-
-const initialTodos: ITodo[] = [
-  {
-    completed: false,
-    description: "SomeThings",
-    id: 1,
-    createdAt: new Date(),
-    edited: new Date(),
-  },
-  {
-    completed: false,
-    description: "SomeThings-3",
-    id: 2,
-    createdAt: new Date(),
-    edited: new Date(),
-  },
-];
+import {
+  changeStatusTask,
+  deleteTask,
+  updateTask,
+  useTodo,
+} from "./store/task";
 
 export const App = () => {
   const [editingValue, setEditingValue] = useState("");
-  const [todos, setTodos] = useState<ITodo[]>(initialTodos);
-  const [editModeId, setEditModeId] = useState<number | null>(null);
+  const [editModeId, setEditModeId] = useState<string | null>(null);
 
-  const handleChange = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-      ),
-    );
-  };
+  const todos = useTodo();
 
-  const handleDelete = (id: number) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
-    toast("Event has been deleted", { type: "default", autoClose: 2000 });
-  };
-
-  const handleToggle = (id: number) => {
+  const handleToggle = (id: string) => {
     const currentTodo = todos.find((todo) => todo.id === id);
 
     if (editModeId === id) {
@@ -62,7 +31,7 @@ export const App = () => {
     setEditModeId(id);
   };
 
-  const handleDescriptionChange = (id: number, description: string) => {
+  const handleDescriptionChange = (id: string, description: string) => {
     const currentTodo = todos.find((todo) => todo.id === id);
 
     if (!currentTodo) return;
@@ -72,46 +41,12 @@ export const App = () => {
       return;
     }
 
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              description,
-              completed: false,
-              edited: new Date(),
-            }
-          : todo,
-      ),
-    );
+    updateTask({ description });
 
     toast("Task has been updated", {
       type: "info",
       autoClose: 2000,
     });
-  };
-
-  const handleAddNewTask = (
-    e: SubmitEvent<HTMLFormElement>,
-    description: string,
-  ) => {
-    e.preventDefault();
-
-    if (description && description.trim()) {
-      setTodos((prev) => [
-        ...prev,
-        {
-          id: todos.length + 1,
-          description,
-          completed: false,
-          createdAt: new Date(),
-          edited: null,
-        },
-      ]);
-      toast.success("Event has been created");
-    } else {
-      toast.error("Please enter a valid task description");
-    }
   };
 
   return (
@@ -121,8 +56,8 @@ export const App = () => {
           <span style={{ color: "var(--accent)" }}>Margo</span>`s Todo List
         </h1>
 
-        <AddTaskForm onSubmit={handleAddNewTask} key={todos.length} />
-        <ControlTaskActions setTodos={setTodos} todos={todos} />
+        <AddTaskForm key={todos.length} />
+        <ControlTaskActions />
 
         {todos.length === 0 ? (
           <EmptyTaskList />
@@ -133,7 +68,7 @@ export const App = () => {
                 <input
                   type="checkbox"
                   checked={todo.completed}
-                  onChange={() => handleChange(todo.id)}
+                  onChange={() => changeStatusTask(todo.id)}
                 />
               </div>
               {editModeId === todo.id ? (
@@ -166,12 +101,7 @@ export const App = () => {
                 <button type="button" onClick={() => handleToggle(todo.id)}>
                   {editModeId !== todo.id && "✏️"}
                 </button>
-                <button
-                  onClick={() => handleDelete(todo.id)}
-                  aria-label="Delete"
-                >
-                  🗑️
-                </button>
+                <button onClick={() => deleteTask(todo.id)}>🗑️</button>
               </div>
             </div>
           ))
