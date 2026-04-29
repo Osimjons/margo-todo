@@ -217,6 +217,7 @@ h1 {
 .card {
   display: flex;
   flex-direction: column;
+  color: var(--text-h);
 }
 .bottom-block {
   display: flex;
