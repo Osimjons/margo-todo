@@ -21,7 +21,7 @@
 .habit-days,
 .habit-row {
   display: grid;
-  grid-template-columns: 150px repeat(31, 14px);
+  grid-template-columns: 130px repeat(31, clamp(12px, 1.7vw, 30px));
   gap: 3px;
   align-items: center;
 }
@@ -43,9 +43,19 @@
   color: white;
   font-size: 14px;
 }
+.habit-name button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
 
 .habit-circle {
-  width: 12px;
+  width: clamp(12px, 1.7vw, 22px);
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid #555;
@@ -63,9 +73,10 @@
   transform: scale(1.05);
 }
 /* Адаптация для совсем маленьких экранов (если нужно) */
-@media (max-width: 780px) {
+/* grid-template-columns: 120px repeat(31, 18px); */
+
+/* @media (max-width: 780px) {
   .days-grid {
     grid-template-columns: repeat(31, 18px);
-    /* grid-template-columns: 120px repeat(31, 18px); */
   }
-}
+} */

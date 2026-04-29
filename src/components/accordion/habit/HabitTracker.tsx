@@ -25,7 +25,7 @@ export const HabitTracker = () => {
 
   return (
     <div className="habit-tracker">
-      <div className="habit-form">
+      <form className="habit-form" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Add new habit"
@@ -33,8 +33,8 @@ export const HabitTracker = () => {
           onChange={(e) => setValue(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>+</button>
-      </div>
+        <button type="submit">+</button>
+      </form>
 
       <div className="habit-grid">
         <div className="habit-days">
