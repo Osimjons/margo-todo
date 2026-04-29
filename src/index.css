@@ -45,6 +45,8 @@ body {
   padding: 0;
   background: var(--bg);
   color: var(--text-h);
+  width: 100%;
+  overflow: hidden;
 }
 
 h1,
