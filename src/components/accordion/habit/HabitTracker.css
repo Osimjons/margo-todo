@@ -14,7 +14,7 @@
 .habit-grid {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 6px;
   overflow-x: auto;
 }
 
