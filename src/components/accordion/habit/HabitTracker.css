@@ -1,14 +1,8 @@
-/* App.css */
-
 .habit-tracker {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.habit-form {
-  display: flex;
-  gap: 10px;
+  padding-top: 8px;
 }
 
 .habit-grid {
@@ -28,12 +22,6 @@
 
 .habit-title-space {
   height: 1px;
-}
-
-.day-number {
-  font-size: 12px;
-  text-align: center;
-  color: #999;
 }
 
 .habit-name {
@@ -82,7 +70,7 @@
 /* текущее число */
 .day-number.today {
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 /* обычный кружок */
@@ -106,4 +94,31 @@
 .habit-circle.active {
   background: var(--accent);
   border-color: var(--accent);
+}
+
+.habit-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.habit-actions button {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.habit-actions button:not(:disabled):hover {
+  background: var(--accent-bg);
+}
+
+.habit-actions button:disabled {
+  background: "transparent";
+  color: #999;
+  border: 1px solid #999;
 }

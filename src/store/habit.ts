@@ -12,6 +12,8 @@ interface IHabitState {
   addHabit: (title: string) => void;
   deleteHabit: (id: string) => void;
   toggleHabitDay: (habitId: string, day: number) => void;
+
+  resetAllCheckedDays: () => void;
 }
 
 const initialState: IHabitState = {
@@ -19,6 +21,7 @@ const initialState: IHabitState = {
   addHabit: () => {},
   deleteHabit: () => {},
   toggleHabitDay: () => {},
+  resetAllCheckedDays: () => {},
 };
 
 export const useHabitStore = create<IHabitState>()(
@@ -79,6 +82,21 @@ export const useHabitStore = create<IHabitState>()(
             "toggleHabitDay",
           );
         },
+
+        resetAllCheckedDays: () => {
+          set(
+            (state) => ({
+              habits: state.habits.map((habit) => ({
+                ...habit,
+                checkedDays: [],
+              })),
+            }),
+            false,
+            "resetAllCheckedDays",
+          );
+
+          toast.info("All habit progress has been reset");
+        },
       }),
       {
         name: "HabitStore",
@@ -97,3 +115,6 @@ export const deleteHabit = (id: string) =>
 
 export const toggleHabitDay = (habitId: string, day: number) =>
   useHabitStore.getState().toggleHabitDay(habitId, day);
+
+export const resetAllCheckedDays = () =>
+  useHabitStore.getState().resetAllCheckedDays();

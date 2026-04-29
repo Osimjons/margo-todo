@@ -6,6 +6,7 @@ import {
   addHabit,
   deleteHabit,
   toggleHabitDay,
+  resetAllCheckedDays,
 } from "../../../store/habit";
 
 import "./HabitTracker.css";
@@ -17,6 +18,8 @@ export const HabitTracker = () => {
   const habits = useHabits();
   const [value, setValue] = useState("");
 
+  const disabled = habits.every((habit) => !habit.checkedDays.length);
+
   const handleSubmit = () => {
     if (!value.trim()) return;
 
@@ -27,7 +30,6 @@ export const HabitTracker = () => {
   return (
     <div className="habit-tracker">
       <form
-        className="habit-form"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
@@ -44,6 +46,15 @@ export const HabitTracker = () => {
       </form>
 
       <div className="habit-grid">
+        <div className="habit-actions">
+          <button
+            type="button"
+            onClick={resetAllCheckedDays}
+            disabled={disabled}
+          >
+            Reset month
+          </button>
+        </div>
         <div className="habit-days">
           <div className="habit-title-space" />
 
