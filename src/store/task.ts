@@ -12,7 +12,7 @@ interface IState {
   setNewTask: (payload: ITodo["description"]) => void;
   deleteTask: (id: string) => void;
   changeStatusTask: (id: ITodo["id"]) => void;
-  updateTask: (payload: Partial<ITodo>) => void;
+  updateTask: (payload: Pick<ITodo, "id" | "description">) => void;
   setToggleCompletedAllTask: () => void;
   setClearCompleted: () => void;
 }
@@ -20,13 +20,15 @@ interface IState {
 const initialState: IState = {
   todos: [],
   filterType: EnumTypes.ALL,
-  setFilterType: () => {},
   setNewTask: () => {},
   deleteTask: () => {},
-  updateTask: () => {},
   changeStatusTask: () => {},
   setToggleCompletedAllTask: () => {},
   setClearCompleted: () => {},
+
+  updateTask: () => {},
+
+  setFilterType: () => {},
 };
 
 export const useTaskStore = create<IState>()(
@@ -83,8 +85,6 @@ export const useTaskStore = create<IState>()(
           });
         },
 
-        setFilterType: (type: EnumTypes) => set({ filterType: type }),
-
         setToggleCompletedAllTask: () => {
           set((state) => {
             const allCompleted = state.todos.every((todo) => todo.completed);
@@ -109,17 +109,30 @@ export const useTaskStore = create<IState>()(
           });
         },
 
-        updateTask: (payload: Partial<ITodo>) =>
+        updateTask: (payload: { id: string; description: string }) => {
           set((state) => {
-            const updatedTodos = [...state.todos];
-            const index = updatedTodos.findIndex(
-              (todo) => todo.id === payload.id,
-            );
-            if (index !== -1) {
-              updatedTodos[index] = { ...updatedTodos[index], ...payload };
-            }
+            const copyOfState = [...state.todos];
+
+            const updatedTodos = copyOfState.map((todo) => {
+              if (todo.id === payload.id)
+                return {
+                  ...todo,
+                  description: payload.description,
+                  edited: new Date(),
+                };
+              return todo;
+            });
+
             return { todos: updatedTodos };
-          }),
+          });
+
+          toast("Task has been updated", {
+            type: "info",
+            autoClose: 2000,
+          });
+        },
+
+        setFilterType: (type: EnumTypes) => set({ filterType: type }),
       }),
       { name: "TaskStore" },
     ),
@@ -134,7 +147,7 @@ export const addNewTask = (payload: ITodo["description"]) =>
 export const deleteTask = (id: string) =>
   useTaskStore.getState().deleteTask(id);
 
-export const updateTask = (payload: Partial<ITodo>) =>
+export const updateTask = (payload: Pick<ITodo, "id" | "description">) =>
   useTaskStore.getState().updateTask(payload);
 
 export const changeStatusTask = (id: string) =>

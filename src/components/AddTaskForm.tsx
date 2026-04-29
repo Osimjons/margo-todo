@@ -15,7 +15,7 @@ export const AddTaskForm = () => {
     e.preventDefault();
 
     if (description && description.trim()) {
-      addNewTask(description);
+      addNewTask(description.trim());
       toast.success("Event has been created");
     } else {
       toast.error("Please enter a valid task description");
