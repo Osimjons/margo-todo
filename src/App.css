@@ -205,7 +205,6 @@ h1 {
 
 @media (max-width: 600px) {
   .stats {
-    flex-direction: column;
     gap: 5px;
     text-align: center;
   }
