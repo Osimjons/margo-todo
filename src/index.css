@@ -36,7 +36,7 @@
     --bg: #16171d;
     --bg-card: #2a2c35;
     --bg-input: #1f2028;
-    --border: #2e303a;
+    --border: #25272f;
     --code-bg: #1f2028;
     --accent: #c084fc;
     --accent-bg: rgba(192, 132, 252, 0.15);
@@ -90,3 +90,6 @@ h2 {
 p {
   margin: 0;
 }
+/* * {
+  outline: 1px solid red;
+} */

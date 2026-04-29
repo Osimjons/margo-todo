@@ -242,3 +242,80 @@ h1 {
   justify-content: space-between;
   align-items: center;
 }
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-direction: column;
+}
+
+/* App.css
+
+.habit-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.habit-form {
+  display: flex;
+  gap: 10px;
+}
+
+.habit-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-x: auto;
+}
+
+.habit-days,
+.habit-row {
+  display: grid;
+  grid-template-columns: 180px repeat(31, 28px);
+  gap: 8px;
+  align-items: center;
+}
+
+.habit-title-space {
+  height: 1px;
+}
+
+.day-number {
+  font-size: 12px;
+  text-align: center;
+  color: #999;
+}
+
+.habit-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+}
+
+.habit-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #555;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.habit-circle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.habit-circle:hover {
+  transform: scale(1.05);
+} */
+/* Адаптация для совсем маленьких экранов (если нужно) */
+/* @media (max-width: 360px) {
+  .days-grid {
+    grid-template-columns: repeat(31, 18px);
+  }
+} */

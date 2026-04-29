@@ -1,0 +1,99 @@
+// store/habit.ts
+
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
+import type { IHabit } from "../models/habit";
+
+interface IHabitState {
+  habits: IHabit[];
+
+  addHabit: (title: string) => void;
+  deleteHabit: (id: string) => void;
+  toggleHabitDay: (habitId: string, day: number) => void;
+}
+
+const initialState: IHabitState = {
+  habits: [],
+  addHabit: () => {},
+  deleteHabit: () => {},
+  toggleHabitDay: () => {},
+};
+
+export const useHabitStore = create<IHabitState>()(
+  devtools(
+    persist(
+      (set) => ({
+        ...initialState,
+
+        addHabit: (title: string) => {
+          set(
+            (state) => ({
+              habits: [
+                ...state.habits,
+                {
+                  id: uuidv4(),
+                  title,
+                  checkedDays: [],
+                  createdAt: new Date(),
+                },
+              ],
+            }),
+            false,
+            "addHabit",
+          );
+
+          toast.success("Habit created");
+        },
+
+        deleteHabit: (id: string) => {
+          set(
+            (state) => ({
+              habits: state.habits.filter((habit) => habit.id !== id),
+            }),
+            false,
+            "deleteHabit",
+          );
+
+          toast.info("Habit deleted");
+        },
+
+        toggleHabitDay: (habitId: string, day: number) => {
+          set(
+            (state) => ({
+              habits: state.habits.map((habit) => {
+                if (habit.id !== habitId) return habit;
+
+                const alreadyChecked = habit.checkedDays.includes(day);
+
+                return {
+                  ...habit,
+                  checkedDays: alreadyChecked
+                    ? habit.checkedDays.filter((d) => d !== day)
+                    : [...habit.checkedDays, day],
+                };
+              }),
+            }),
+            false,
+            "toggleHabitDay",
+          );
+        },
+      }),
+      {
+        name: "HabitStore",
+      },
+    ),
+  ),
+);
+
+export const useHabits = () => useHabitStore((store) => store.habits);
+
+export const addHabit = (title: string) =>
+  useHabitStore.getState().addHabit(title);
+
+export const deleteHabit = (id: string) =>
+  useHabitStore.getState().deleteHabit(id);
+
+export const toggleHabitDay = (habitId: string, day: number) =>
+  useHabitStore.getState().toggleHabitDay(habitId, day);

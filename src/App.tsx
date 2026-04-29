@@ -14,6 +14,8 @@ import {
 } from "./store/task";
 import { getFormattedDate } from "./helper/helper";
 import { EnumTypes } from "./models/task";
+import { Accordion } from "./components/accordion/Accordion";
+import { HabitTracker } from "./components/accordion/habit/HabitTracker";
 
 export const App = () => {
   const [editingValue, setEditingValue] = useState("");
@@ -50,61 +52,74 @@ export const App = () => {
         </h1>
 
         <AddTaskForm key={filteredTodos.length} />
-        <ControlTaskActions />
-
-        {filteredTodos.length === 0 ? (
-          <EmptyTaskList />
-        ) : (
-          (filteredTodos ?? []).map((todo) => (
-            <div key={todo.id} className="item">
-              <div className="inp">
-                <input
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => changeStatusTask(todo.id)}
-                />
-              </div>
-              <div className="space-between">
-                {editModeId !== todo.id ? (
-                  <div className="card">
-                    <p className={todo.completed ? "completed" : ""}>
-                      {todo.description}
-                    </p>
-                    <div className="card__bottom-block bottom-block">
-                      <p className="bottom-block__created">
-                        Created: {getFormattedDate(todo.createdAt)}
-                      </p>
-                      <p className="bottom-block__edited">
-                        Edited: {getFormattedDate(todo.edited) ?? "Not edited"}
-                      </p>
+        <div className="wrapper">
+          <Accordion title="Tasks">
+            <>
+              <ControlTaskActions />
+              {filteredTodos.length === 0 ? (
+                <EmptyTaskList />
+              ) : (
+                (filteredTodos ?? []).map((todo) => (
+                  <div key={todo.id} className="item">
+                    <div className="inp">
+                      <input
+                        type="checkbox"
+                        checked={todo.completed}
+                        onChange={() => changeStatusTask(todo.id)}
+                      />
+                    </div>
+                    <div className="space-between">
+                      {editModeId !== todo.id ? (
+                        <div className="card">
+                          <p className={todo.completed ? "completed" : ""}>
+                            {todo.description}
+                          </p>
+                          <div className="card__bottom-block bottom-block">
+                            <p className="bottom-block__created">
+                              Created: {getFormattedDate(todo.createdAt)}
+                            </p>
+                            <p className="bottom-block__edited">
+                              Edited:{" "}
+                              {getFormattedDate(todo.edited) ?? "Not edited"}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <input
+                          type="text"
+                          value={editingValue}
+                          onChange={(e) => setEditingValue(e.target.value)}
+                          autoFocus
+                          onBlur={() => {
+                            updateTask({
+                              description: editingValue.trim(),
+                              id: todo.id,
+                            });
+                            setEditModeId(null);
+                          }}
+                        />
+                      )}
+                      <div className="button-block">
+                        <button
+                          type="button"
+                          onClick={() => handleToggle(todo.id)}
+                        >
+                          {editModeId !== todo.id && "✏️"}
+                        </button>
+                        <button onClick={() => deleteTask(todo.id)}>🗑️</button>
+                      </div>
                     </div>
                   </div>
-                ) : (
-                  <input
-                    type="text"
-                    value={editingValue}
-                    onChange={(e) => setEditingValue(e.target.value)}
-                    autoFocus
-                    onBlur={() => {
-                      updateTask({
-                        description: editingValue.trim(),
-                        id: todo.id,
-                      });
-                      setEditModeId(null);
-                    }}
-                  />
-                )}
-                <div className="button-block">
-                  <button type="button" onClick={() => handleToggle(todo.id)}>
-                    {editModeId !== todo.id && "✏️"}
-                  </button>
-                  <button onClick={() => deleteTask(todo.id)}>🗑️</button>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+                ))
+              )}
+            </>
+          </Accordion>
+          <Accordion title="Tracker" defaultOpen>
+            <HabitTracker />
+          </Accordion>
+        </div>
       </section>
+
       <ToastContainer />
     </div>
   );
