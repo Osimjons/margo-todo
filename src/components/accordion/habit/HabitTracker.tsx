@@ -11,6 +11,7 @@ import {
 import "./HabitTracker.css";
 
 const days = Array.from({ length: 31 }, (_, i) => i + 1);
+const today = new Date().getDate(); // текущее число месяца
 
 export const HabitTracker = () => {
   const habits = useHabits();
@@ -25,7 +26,13 @@ export const HabitTracker = () => {
 
   return (
     <div className="habit-tracker">
-      <form className="habit-form" onSubmit={handleSubmit}>
+      <form
+        className="habit-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <input
           type="text"
           placeholder="Add new habit"
@@ -41,7 +48,10 @@ export const HabitTracker = () => {
           <div className="habit-title-space" />
 
           {days.map((day) => (
-            <span key={day} className="day-number">
+            <span
+              key={day}
+              className={`day-number ${day === today ? "today" : ""}`}
+            >
               {day}
             </span>
           ))}
@@ -52,7 +62,9 @@ export const HabitTracker = () => {
             <div className="habit-name">
               <span>{habit.title}</span>
 
-              <button onClick={() => deleteHabit(habit.id)}>🗑️</button>
+              <button type="button" onClick={() => deleteHabit(habit.id)}>
+                🗑️
+              </button>
             </div>
 
             {days.map((day) => {
@@ -61,7 +73,11 @@ export const HabitTracker = () => {
               return (
                 <button
                   key={day}
-                  className={`habit-circle ${isChecked ? "active" : ""}`}
+                  type="button"
+                  className={`habit-circle
+                    ${isChecked ? "active" : ""}
+                    ${day === today ? "today-circle" : ""}
+                  `}
                   onClick={() => toggleHabitDay(habit.id, day)}
                 />
               );

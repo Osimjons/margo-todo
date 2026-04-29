@@ -72,11 +72,38 @@
 .habit-circle:hover {
   transform: scale(1.05);
 }
-/* Адаптация для совсем маленьких экранов (если нужно) */
-/* grid-template-columns: 120px repeat(31, 18px); */
+.day-number {
+  font-size: 12px;
+  text-align: center;
+  color: #999;
+  transition: 0.2s;
+}
 
-/* @media (max-width: 780px) {
-  .days-grid {
-    grid-template-columns: repeat(31, 18px);
-  }
-} */
+/* текущее число */
+.day-number.today {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* обычный кружок */
+.habit-circle {
+  width: clamp(12px, 1.7vw, 22px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid #555;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* кружок под текущим днем */
+.habit-circle.today-circle {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(170, 59, 255, 0.15);
+}
+
+/* если кружок выбран */
+.habit-circle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
