@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
 import "./App.css";
@@ -9,15 +9,31 @@ import {
   changeStatusTask,
   deleteTask,
   updateTask,
+  useFilterStatus,
   useTodo,
 } from "./store/task";
 import { getFormattedDate } from "./helper/helper";
+import { EnumTypes } from "./models/task";
 
 export const App = () => {
   const [editingValue, setEditingValue] = useState("");
   const [editModeId, setEditModeId] = useState<string | null>(null);
 
   const todos = useTodo();
+  const filterType = useFilterStatus();
+
+  const filteredTodos = useMemo(
+    () =>
+      todos.filter((todo) => {
+        if (filterType === EnumTypes.ACTIVE) {
+          return !todo.completed;
+        } else if (filterType === EnumTypes.COMPLETED) {
+          return todo.completed;
+        }
+        return true;
+      }),
+    [todos, filterType],
+  );
 
   const handleToggle = (id: string) => {
     const currentTodo = todos.find((todo) => todo.id === id);
@@ -33,13 +49,13 @@ export const App = () => {
           <span style={{ color: "var(--accent)" }}>Margo</span>`s Todo List
         </h1>
 
-        <AddTaskForm key={todos.length} />
+        <AddTaskForm key={filteredTodos.length} />
         <ControlTaskActions />
 
-        {todos.length === 0 ? (
+        {filteredTodos.length === 0 ? (
           <EmptyTaskList />
         ) : (
-          (todos ?? []).map((todo) => (
+          (filteredTodos ?? []).map((todo) => (
             <div key={todo.id} className="item">
               <div className="inp">
                 <input

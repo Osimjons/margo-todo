@@ -140,6 +140,7 @@ export const useTaskStore = create<IState>()(
 );
 
 export const useTodo = () => useTaskStore((store) => store.todos);
+export const useFilterStatus = () => useTaskStore((store) => store.filterType);
 
 export const addNewTask = (payload: ITodo["description"]) =>
   useTaskStore.getState().setNewTask(payload);
