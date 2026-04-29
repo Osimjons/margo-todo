@@ -7,7 +7,7 @@ import {
   deleteHabit,
   toggleHabitDay,
   resetAllCheckedDays,
-} from "../../../store/habit";
+} from "../../store/habit";
 
 import "./HabitTracker.css";
 

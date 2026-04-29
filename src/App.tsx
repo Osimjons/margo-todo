@@ -15,7 +15,7 @@ import {
 import { getFormattedDate } from "./helper/helper";
 import { EnumTypes } from "./models/task";
 import { Accordion } from "./components/accordion/Accordion";
-import { HabitTracker } from "./components/accordion/habit/HabitTracker";
+import { HabitTracker } from "./components/habit/HabitTracker";
 
 export const App = () => {
   const [editingValue, setEditingValue] = useState("");
@@ -79,7 +79,7 @@ export const App = () => {
                               Created: {getFormattedDate(todo.createdAt)}
                             </p>
                             <p className="bottom-block__edited">
-                              Edited:{" "}
+                              Edited:
                               {getFormattedDate(todo.edited) ?? "Not edited"}
                             </p>
                           </div>
