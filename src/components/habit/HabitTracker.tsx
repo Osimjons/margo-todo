@@ -1,5 +1,3 @@
-// components/HabitTracker.tsx
-
 import { useState } from "react";
 import {
   useHabits,
@@ -34,68 +32,72 @@ export const HabitTracker = () => {
           e.preventDefault();
           handleSubmit();
         }}
+        name="habit"
       >
         <input
           type="text"
           placeholder="Add new habit"
           value={value}
+          name="habit"
           onChange={(e) => setValue(e.target.value)}
         />
 
         <button type="submit">+</button>
       </form>
 
-      <div className="habit-grid">
-        <div className="habit-actions">
-          <button
-            type="button"
-            onClick={resetAllCheckedDays}
-            disabled={disabled}
-          >
-            Reset month
-          </button>
-        </div>
-        <div className="habit-days">
-          <div className="habit-title-space" />
-
-          {days.map((day) => (
-            <span
-              key={day}
-              className={`day-number ${day === today ? "today" : ""}`}
+      {habits.length > 0 && (
+        <div className="habit-grid">
+          <div className="habit-actions">
+            <button
+              type="button"
+              onClick={resetAllCheckedDays}
+              disabled={disabled}
             >
-              {day}
-            </span>
-          ))}
-        </div>
+              Reset month
+            </button>
+          </div>
+          <div className="habit-days">
+            <div className="habit-title-space" />
 
-        {habits.map((habit) => (
-          <div key={habit.id} className="habit-row">
-            <div className="habit-name">
-              <span>{habit.title}</span>
+            {days.map((day) => (
+              <span
+                key={day}
+                className={`day-number ${day === today ? "today" : ""}`}
+              >
+                {day}
+              </span>
+            ))}
+          </div>
 
-              <button type="button" onClick={() => deleteHabit(habit.id)}>
-                🗑️
-              </button>
-            </div>
+          {habits.map((habit) => (
+            <div key={habit.id} className="habit-row">
+              <div className="habit-name">
+                <span>{habit.title}</span>
 
-            {days.map((day) => {
-              const isChecked = habit.checkedDays.includes(day);
+                <button type="button" onClick={() => deleteHabit(habit.id)}>
+                  🗑️
+                </button>
+              </div>
 
-              return (
-                <button
-                  key={day}
-                  type="button"
-                  className={`habit-circle
+              {days.map((day) => {
+                const isChecked = habit.checkedDays.includes(day);
+
+                return (
+                  <button
+                    key={day}
+                    type="button"
+                    className={`habit-circle
                     ${isChecked ? "active" : ""}
                     ${day === today ? "today-circle" : ""}
                   `}
-                  onClick={() => toggleHabitDay(habit.id, day)}
-                />
-              );
-            })}
-          </div>
-        ))}
-      </div>
+                    onClick={() => toggleHabitDay(habit.id, day)}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
