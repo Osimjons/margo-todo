@@ -8,6 +8,7 @@ import { HabitActions } from "../habit-actions/HabitActions";
 import { CreateHabit } from "../create-habit/CreateHabit";
 
 import "./HabitTracker.css";
+import { ImportAndExportHabits } from "../habit-actions/ImportAndExportHabits";
 
 export const HabitTracker = () => {
   const habits = useHabits();
@@ -16,6 +17,8 @@ export const HabitTracker = () => {
   return (
     <div className="habit-tracker">
       <CreateHabit key={habits.length} />
+
+      <ImportAndExportHabits isCanDownload={habits.length > 0} />
 
       {habits.length > 0 && (
         <div className="habit-grid">

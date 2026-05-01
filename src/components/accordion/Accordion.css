@@ -60,7 +60,7 @@
 }
 
 .accordion__content--open {
-  max-height: 450px;
+  max-height: calc(100vh - 220px);
 }
 
 .accordion__body {

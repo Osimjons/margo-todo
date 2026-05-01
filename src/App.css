@@ -7,10 +7,10 @@
   padding: 20px;
 }
 
-.counter {
+/* .counter {
   width: 100%;
   margin-top: 20px;
-}
+} */
 
 .item {
   display: flex;
@@ -135,6 +135,17 @@ form input:focus {
   box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.2);
 }
 
+input[type="file"] {
+  box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.2);
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  background: var(--bg-input);
+  color: var(--text-h);
+}
+
 form button {
   padding: 12px 20px;
   border: none;
@@ -153,7 +164,6 @@ form button:hover {
 
 h1 {
   font-size: 36px;
-  margin: 20px 0;
   color: var(--text-h);
 }
 

@@ -9,6 +9,7 @@ export const CreateHabit = () => {
 
     addHabit(value.trim());
   };
+
   return (
     <form
       onSubmit={(e) => {
