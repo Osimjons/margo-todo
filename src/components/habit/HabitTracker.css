@@ -55,7 +55,6 @@
   z-index: 3;
   background: rgba(0, 0, 0, 0.01);
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   /* padding: 5px; */
 }
 
