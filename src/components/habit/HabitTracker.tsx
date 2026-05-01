@@ -5,6 +5,7 @@ import {
   deleteHabit,
   toggleHabitDay,
   resetAllCheckedDays,
+  editHabit,
 } from "../../store/habit";
 
 import "./HabitTracker.css";
@@ -14,11 +15,19 @@ const today = new Date().getDate(); // текущее число месяца
 
 // получаем текущий месяц уже в строковом виде, чтобы отображать его в интерфейсе
 const currentMonthName = new Date().toLocaleString("ru-RU", { month: "long" });
+
 export const HabitTracker = () => {
   const habits = useHabits();
   const [value, setValue] = useState("");
 
+  const [editMode, setEditMode] = useState({ id: "", title: "" });
+
   const disabled = habits.every((habit) => !habit.checkedDays.length);
+
+  const editHabitTitle = (id: string) => {
+    const habit = habits.find((h) => h.id === id);
+    return habit ? habit.title : "";
+  };
 
   const handleSubmit = () => {
     if (!value.trim()) return;
@@ -82,11 +91,50 @@ export const HabitTracker = () => {
           {habits.map((habit) => (
             <div key={habit.id} className="habit-row">
               <div className="habit-name">
-                <span>{habit.title}</span>
-
-                <button type="button" onClick={() => deleteHabit(habit.id)}>
-                  🗑️
-                </button>
+                {editMode.id === habit.id ? (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      setEditMode({ id: "", title: "" });
+                      editHabit({
+                        id: habit.id,
+                        newTitle: editMode.title.trim(),
+                      });
+                    }}
+                  >
+                    <input
+                      value={editMode.title || editHabitTitle(habit.id)}
+                      name="edit"
+                      autoFocus
+                      onChange={(e) =>
+                        setEditMode({ ...editMode, title: e.target.value })
+                      }
+                      onBlur={() => {
+                        setEditMode({ id: "", title: "" });
+                        editHabit({
+                          id: habit.id,
+                          newTitle: editMode.title.trim(),
+                        });
+                      }}
+                    />
+                  </form>
+                ) : (
+                  <>
+                    <span
+                      onDoubleClick={() =>
+                        setEditMode({
+                          id: habit.id,
+                          title: editHabitTitle(habit.id),
+                        })
+                      }
+                    >
+                      {habit.title}
+                    </span>
+                    <button type="button" onClick={() => deleteHabit(habit.id)}>
+                      🗑️
+                    </button>
+                  </>
+                )}
               </div>
 
               {days.map((day) => {

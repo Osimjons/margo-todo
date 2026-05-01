@@ -10,6 +10,7 @@ interface IHabitState {
   habits: IHabit[];
 
   addHabit: (title: string) => void;
+  editHabit: (payload: { id: string; newTitle: string }) => void;
   deleteHabit: (id: string) => void;
   toggleHabitDay: (habitId: string, day: number) => void;
 
@@ -19,6 +20,7 @@ interface IHabitState {
 const initialState: IHabitState = {
   habits: [],
   addHabit: () => {},
+  editHabit: () => {},
   deleteHabit: () => {},
   toggleHabitDay: () => {},
   resetAllCheckedDays: () => {},
@@ -48,6 +50,22 @@ export const useHabitStore = create<IHabitState>()(
           );
 
           toast.success("Habit created");
+        },
+        editHabit: (payload: { id: string; newTitle: string }) => {
+          set(
+            (state) => {
+              const editedHabit = state.habits.map((habit) =>
+                habit.id === payload.id
+                  ? { ...habit, title: payload.newTitle }
+                  : habit,
+              );
+
+              toast.success("Habit edited successfully");
+              return { habits: editedHabit };
+            },
+            false,
+            "editHabit",
+          );
         },
 
         deleteHabit: (id: string) => {
@@ -109,6 +127,9 @@ export const useHabits = () => useHabitStore((store) => store.habits);
 
 export const addHabit = (title: string) =>
   useHabitStore.getState().addHabit(title);
+
+export const editHabit = (payload: { id: string; newTitle: string }) =>
+  useHabitStore.getState().editHabit(payload);
 
 export const deleteHabit = (id: string) =>
   useHabitStore.getState().deleteHabit(id);
