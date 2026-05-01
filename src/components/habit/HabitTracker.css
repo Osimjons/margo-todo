@@ -79,10 +79,12 @@
 
 /* текущее число */
 .day-number.today {
-  color: var(--accent);
+  background-color: var(--accent);
   font-weight: 800;
+  color: var(--text-h);
   border: 1.6px solid var(--accent);
   border-radius: 5px;
+  text-align: center;
 }
 
 /* обычный кружок */
