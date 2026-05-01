@@ -76,7 +76,7 @@ export const HabitItem = ({ habit, index }: IHabitItemProps) => {
                       ${isChecked ? "active" : ""}
                       ${day === today ? "today-circle" : ""}
                     `}
-            onClick={() => toggleHabitDay(habit.id, day)}
+            onDoubleClick={() => toggleHabitDay(habit.id, day)}
           />
         );
       })}

@@ -51,9 +51,12 @@ export const App = () => {
           <span style={{ color: "var(--accent)" }}>Margo</span>`s Todo List
         </h1>
 
-        <AddTaskForm key={filteredTodos.length} />
         <div className="wrapper">
+          <Accordion title="Tracker" defaultOpen>
+            <HabitTracker />
+          </Accordion>
           <Accordion title="Tasks">
+            <AddTaskForm key={filteredTodos.length} />
             <>
               <ControlTaskActions />
               {filteredTodos.length === 0 ? (
@@ -113,9 +116,6 @@ export const App = () => {
                 ))
               )}
             </>
-          </Accordion>
-          <Accordion title="Tracker" defaultOpen>
-            <HabitTracker />
           </Accordion>
         </div>
       </section>
