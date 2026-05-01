@@ -12,6 +12,8 @@ import "./HabitTracker.css";
 const days = Array.from({ length: 31 }, (_, i) => i + 1);
 const today = new Date().getDate(); // текущее число месяца
 
+// получаем текущий месяц уже в строковом виде, чтобы отображать его в интерфейсе
+const currentMonthName = new Date().toLocaleString("ru-RU", { month: "long" });
 export const HabitTracker = () => {
   const habits = useHabits();
   const [value, setValue] = useState("");
@@ -55,6 +57,14 @@ export const HabitTracker = () => {
             >
               Reset month
             </button>
+            <p
+              style={{
+                textTransform: "capitalize",
+                color: "var(--text-h)",
+              }}
+            >
+              {currentMonthName}
+            </p>
           </div>
           <div className="habit-days">
             <div className="habit-title-space" />

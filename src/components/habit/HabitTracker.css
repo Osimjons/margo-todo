@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 20px;
   padding-top: 8px;
+  position: relative;
 }
 
 .habit-grid {
@@ -10,14 +11,16 @@
   flex-direction: column;
   gap: 6px;
   overflow-x: auto;
+  /* padding-right: 20px; Ensure last column is fully visible */
 }
 
 .habit-days,
 .habit-row {
   display: grid;
-  grid-template-columns: 130px repeat(31, clamp(12px, 1.7vw, 30px));
-  gap: 3px;
+  grid-template-columns: 150px repeat(31, clamp(20px, 1.7vw, 30px));
+  gap: 5px;
   align-items: center;
+  min-width: max-content;
 }
 
 .habit-title-space {
@@ -30,26 +33,34 @@
   align-items: center;
   color: white;
   font-size: 14px;
+  padding: 3px;
+  text-align: left;
 }
 .habit-name button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 18px;
-  padding: 5px;
+  padding-right: 0px;
   margin-left: 10px;
   border-radius: 4px;
   transition: background-color 0.2s;
 }
 
-.habit-circle {
-  width: clamp(12px, 1.7vw, 22px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid #555;
-  background: transparent;
-  cursor: pointer;
-  transition: 0.2s;
+.habit-title-space:not(:nth-child(1)),
+.habit-name {
+  border-radius: 0 13px 13px 0;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.01);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  /* padding: 5px; */
+}
+
+.habit-days .habit-title-space {
+  z-index: 4;
 }
 
 .habit-circle.active {
@@ -75,7 +86,7 @@
 
 /* обычный кружок */
 .habit-circle {
-  width: clamp(12px, 1.7vw, 22px);
+  width: clamp(20px, 1.7vw, 30px);
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid #555;
@@ -98,8 +109,13 @@
 
 .habit-actions {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 12px;
+
+  position: sticky;
+  left: 0;
+  z-index: 3;
 }
 
 .habit-actions button {
