@@ -82,7 +82,6 @@ export const ImportAndExportHabits = ({
             type="file"
             onChange={handleFileChange}
             style={{
-              // background: "var(--accent)",
               color: "var(--text-h)",
             }}
           />
