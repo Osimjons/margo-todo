@@ -88,7 +88,7 @@ export const HabitTracker = () => {
             ))}
           </div>
 
-          {habits.map((habit) => (
+          {habits.map((habit, index) => (
             <div key={habit.id} className="habit-row">
               <div className="habit-name">
                 {editMode.id === habit.id ? (
@@ -128,7 +128,7 @@ export const HabitTracker = () => {
                         })
                       }
                     >
-                      {habit.title}
+                      {index + 1}. {habit.title}
                     </span>
                     <button type="button" onClick={() => deleteHabit(habit.id)}>
                       🗑️
