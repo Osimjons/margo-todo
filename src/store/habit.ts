@@ -9,6 +9,7 @@ import type { IHabit } from "../models/habit";
 interface IHabitState {
   habits: IHabit[];
 
+  setSortedHabits: (habits: IHabit[]) => void;
   addHabit: (title: string) => void;
   editHabit: (payload: { id: string; newTitle: string }) => void;
   deleteHabit: (id: string) => void;
@@ -19,6 +20,8 @@ interface IHabitState {
 
 const initialState: IHabitState = {
   habits: [],
+
+  setSortedHabits: () => {},
   addHabit: () => {},
   editHabit: () => {},
   deleteHabit: () => {},
@@ -48,9 +51,13 @@ export const useHabitStore = create<IHabitState>()(
             false,
             "addHabit",
           );
-
           toast.success("Habit created");
         },
+
+        setSortedHabits: (habits: IHabit[]) => {
+          set(() => ({ habits }));
+        },
+
         editHabit: (payload: { id: string; newTitle: string }) => {
           set(
             (state) => {
@@ -124,6 +131,9 @@ export const useHabitStore = create<IHabitState>()(
 );
 
 export const useHabits = () => useHabitStore((store) => store.habits);
+
+export const setSortedHabits = (habits: IHabit[]) =>
+  useHabitStore.getState().setSortedHabits(habits);
 
 export const addHabit = (title: string) =>
   useHabitStore.getState().addHabit(title);
