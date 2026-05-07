@@ -3,4 +3,5 @@ export interface IHabit {
   title: string;
   checkedDays: number[]; // [1, 2, 5, 12]
   createdAt: Date;
+  backgroundColor?: string; // цвет фона для элемента списка хобби
 }

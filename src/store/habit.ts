@@ -5,6 +5,7 @@ import { devtools, persist } from "zustand/middleware";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import type { IHabit } from "../models/habit";
+import { randomBackgroundRGBColor } from "../utils/utils";
 
 interface IHabitState {
   habits: IHabit[];
@@ -45,6 +46,7 @@ export const useHabitStore = create<IHabitState>()(
                   title,
                   checkedDays: [],
                   createdAt: new Date(),
+                  backgroundColor: randomBackgroundRGBColor(),
                 },
               ],
             }),
@@ -63,7 +65,11 @@ export const useHabitStore = create<IHabitState>()(
             (state) => {
               const editedHabit = state.habits.map((habit) =>
                 habit.id === payload.id
-                  ? { ...habit, title: payload.newTitle }
+                  ? {
+                      ...habit,
+                      title: payload.newTitle,
+                      backgroundColor: randomBackgroundRGBColor(),
+                    }
                   : habit,
               );
 

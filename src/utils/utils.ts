@@ -5,3 +5,6 @@ export const today = new Date().getDate(); // текущее число меся
 export const currentMonthName = new Date().toLocaleString("ru-RU", {
   month: "long",
 });
+
+export const randomBackgroundRGBColor = () =>
+  `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;

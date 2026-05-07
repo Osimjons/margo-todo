@@ -68,6 +68,10 @@ export const HabitItem = ({ habit, index }: IHabitItemProps) => {
       {days.map((day) => {
         const isChecked = habit.checkedDays.includes(day);
 
+        const bgc = habit.backgroundColor
+          ? { backgroundColor: habit.backgroundColor }
+          : {};
+
         return (
           <button
             key={day}
@@ -76,6 +80,7 @@ export const HabitItem = ({ habit, index }: IHabitItemProps) => {
                       ${isChecked ? "active" : ""}
                       ${day === today ? "today-circle" : ""}
                     `}
+            style={isChecked ? bgc : {}}
             onDoubleClick={() => toggleHabitDay(habit.id, day)}
           />
         );
