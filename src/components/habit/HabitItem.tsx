@@ -69,7 +69,10 @@ export const HabitItem = ({ habit, index }: IHabitItemProps) => {
         const isChecked = habit.checkedDays.includes(day);
 
         const bgc = habit.backgroundColor
-          ? { backgroundColor: habit.backgroundColor }
+          ? {
+              backgroundColor: habit.backgroundColor,
+              borderColor: habit.backgroundColor,
+            }
           : {};
 
         return (
