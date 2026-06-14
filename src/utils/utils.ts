@@ -6,5 +6,28 @@ export const currentMonthName = new Date().toLocaleString("ru-RU", {
   month: "long",
 });
 
+const colors = [
+  "#A40E4C",
+  "#FFCB77",
+  "#FE6D73",
+  "#17C3B2",
+  "#48E5C2",
+  "#00CC99",
+  "#DB5ABA",
+  "#F6AA1C",
+  "#DAFF7D",
+  "#CF4D6F",
+  "#87BFFF",
+  "#2667FF",
+  "#FF4A1C",
+  "#ff8c00",
+  "#F2542D",
+  "#E9724C",
+  "#5EEB5B",
+  "#D90368",
+  "#FFD400",
+  "#FB3640",
+];
+
 export const randomBackgroundRGBColor = () =>
-  `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+  colors[Math.floor(Math.random() * colors.length)];
