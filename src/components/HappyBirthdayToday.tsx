@@ -14,15 +14,14 @@ export const HappyBirthdayToday = () => {
     setOpen(false);
   };
 
-  const happyBirthday = "24.10.2026";
+  const happyBirthday = "24.10";
   const today = new Date();
 
   // Форматируем текущую дату в строку нужного формата (ДД.ММ.ГГГГ)
   const day = String(today.getDate()).padStart(2, "0");
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Месяцы идут с 0 до 11
-  const year = today.getFullYear();
 
-  const todayString = `${day}.${month}.${year}`;
+  const todayString = `${day}.${month}`;
 
   // Теперь сравниваем две строки
   const isHappyBirthdayToday = todayString === happyBirthday;
