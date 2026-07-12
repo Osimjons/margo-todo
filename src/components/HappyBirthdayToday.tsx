@@ -14,7 +14,7 @@ export const HappyBirthdayToday = () => {
     setOpen(false);
   };
 
-  const happyBirthday = "12.07.2026"; //  "24.10.2026";
+  const happyBirthday = "24.10.2026";
   const today = new Date();
 
   // Форматируем текущую дату в строку нужного формата (ДД.ММ.ГГГГ)
