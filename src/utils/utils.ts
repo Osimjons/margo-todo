@@ -6,6 +6,10 @@ export const currentMonthName = new Date().toLocaleString("ru-RU", {
   month: "long",
 });
 
+export const currentWeekday = new Date().toLocaleString("ru-RU", {
+  weekday: "short",
+});
+
 const colors = [
   "#A40E4C",
   "#FFCB77",
