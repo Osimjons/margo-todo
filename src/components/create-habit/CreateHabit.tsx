@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addHabit } from "../../store/habit";
+import "./HabitTracker.css";
 
 export const CreateHabit = () => {
   const [value, setValue] = useState("");
@@ -17,6 +18,7 @@ export const CreateHabit = () => {
         handleSubmit();
       }}
       name="habit"
+      className="habit-form"
     >
       <input
         type="text"
