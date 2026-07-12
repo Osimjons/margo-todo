@@ -9,6 +9,7 @@ import { CreateHabit } from "../create-habit/CreateHabit";
 
 import "./HabitTracker.css";
 import { ImportAndExportHabits } from "../habit-actions/ImportAndExportHabits";
+import { HappyBirthdayToday } from "../HappyBirthdayToday";
 
 export const HabitTracker = () => {
   const habits = useHabits();
@@ -17,6 +18,7 @@ export const HabitTracker = () => {
   return (
     <div className="habit-tracker">
       <CreateHabit key={habits.length} />
+      <HappyBirthdayToday />
 
       <ImportAndExportHabits isCanDownload={habits.length > 0} />
 

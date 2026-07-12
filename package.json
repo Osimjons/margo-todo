@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^6.5.0",
     "@mui/material": "^6.5.0",
+    "js-confetti": "^0.13.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-toastify": "^11.1.0",
