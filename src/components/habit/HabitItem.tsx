@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { IHabit } from "../../models/habit";
 import { deleteHabit, editHabit, toggleHabitDay } from "../../store/habit";
 import { days, today } from "../../utils/utils";
+import { Button, Dialog, DialogTitle, Stack } from "@mui/material";
 
 interface IHabitItemProps {
   habit: IHabit;
@@ -13,6 +14,7 @@ interface IHabitItemProps {
 
 export const HabitItem = ({ habit, index }: IHabitItemProps) => {
   const [editMode, setEditMode] = useState({ id: "", title: "" });
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { ref } = useSortable({ index, id: habit.id });
 
@@ -58,7 +60,7 @@ export const HabitItem = ({ habit, index }: IHabitItemProps) => {
             >
               {index + 1}. {habit.title}
             </span>
-            <button type="button" onClick={() => deleteHabit(habit.id)}>
+            <button type="button" onClick={() => setConfirmDelete(true)}>
               🗑️
             </button>
           </>
@@ -88,6 +90,46 @@ export const HabitItem = ({ habit, index }: IHabitItemProps) => {
           />
         );
       })}
+
+      <Dialog
+        open={confirmDelete}
+        onClose={() => setConfirmDelete(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: "var(--border)",
+            color: "var(--text-h)",
+            borderRadius: 3,
+            p: 5,
+          },
+        }}
+      >
+        <DialogTitle id="alert-dialog-title" textAlign="center">
+          "Do you wanna delete this habit?"
+        </DialogTitle>
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          gap={2}
+          direction="row"
+        >
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={() => deleteHabit(habit.id)}
+          >
+            Yes
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => setConfirmDelete(false)}
+          >
+            No
+          </Button>
+        </Stack>
+      </Dialog>
     </div>
   );
 };

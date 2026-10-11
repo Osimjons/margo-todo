@@ -46,9 +46,8 @@ export const HabitActions = ({ disabled }: IHabitActionsProps) => {
         }}
       >
         <DialogTitle id="alert-dialog-title" textAlign="center">
-          {
-            "You are going to reset all checked days for this month. Are you sure?"
-          }
+          "You are going to reset all checked days for this month. Are you
+          sure?"
         </DialogTitle>
         <Stack
           alignItems="center"
